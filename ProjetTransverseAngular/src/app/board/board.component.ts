@@ -62,6 +62,9 @@ export class BoardComponent implements OnInit {
       if(this.newLevel[i] == '3'){
         this.squaresTab[i] = 'player2.png'
       }
+      if(this.newLevel[i] == '4'){
+        this.squaresTab[i] = 'end.png'
+      }
     }
   }
 
