@@ -10,9 +10,17 @@
 
   <div class = "Menu">
     <div> Niveau actuelle : {{this.actualLevel}}</div>
+
     <button (click)="newGame()"> Create the map</button>
     <button (click)="nextLevel()"> Next level</button>
     <button (click)="lastLevel()"> Last level</button>
     <button (click)="goToMenu()"> Return to Menu</button>
+    <button (click)="goToRight()"> >> </button>
+    <button (click)="goToLeft()"> << </button>
+    <button (click)="goToBot()"> \/ </button>
+    <button (click)="goToTop()"> /\ </button>
+
+
+
   </div>
 </ng-template>
