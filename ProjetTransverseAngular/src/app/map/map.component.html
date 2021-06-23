@@ -1,13 +1,17 @@
-<ng-template [ngIf]="startGame==0">
-  <button (click)="startGameOnMenu()">Start the Game</button>
-  <input type="text" ng-model="name"/>
-</ng-template>
 
-<ng-template [ngIf]="(showHistory==0) && (startGame==0)">
+<button (click)="startGame()"><a href="http://localhost:3000"> Start Game </a></button>
+
+
+
+
+<input type="text" [(ngModel)]="name"/>
+
+
+<ng-template [ngIf]="(showHistory==0)">
   <button (click)="showHistoryButton()">Show History</button>
 </ng-template>
 
-<ng-template [ngIf]="(showHistory==1) && (startGame==0)">
+<ng-template [ngIf]="(showHistory==1)">
   <button (click)="showHistoryButton()">Hide History</button>
 
   <div class="scrollmenu">
@@ -21,14 +25,4 @@
     <li *ngFor="let val of gameHistory;">{{ val.ID }} | {{ val.Pseudo1 }} | {{ val.Pseudo2 }} | {{ val.Time }} | {{ val.Score }} | {{ val.LastLvl }}</li>
   </ul>
 
-</ng-template>
-
-
-<ng-template [ngIf]="startGame==1">
-  <app-board
-   (nextLevelInStyle)="nextLevelStyle($event)"
-   (goToMenuMessage)="returnToMenu($event)"
-   class="main"
-   style="display: grid;grid-template-columns: repeat( {{this.levelData[this.actualLevel-1].Lenght}} , 30px);grid-template-rows: repeat( {{this.levelData[this.actualLevel-1].Width}} , 30px);grid-gap: 0px;">
-  ></app-board>
 </ng-template>

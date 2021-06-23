@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardComponent } from '../board/board.component';
 
 import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-map',
@@ -9,50 +9,48 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-
+  name : string;
   levelData : any;
   actualLevel: number;
   lenght: number;
-  startGame: number;
   showHistory: number;
   gameHistory: any[];
 
 
 
+
   constructor(private httpClient: HttpClient) {
+    this.name = "";
     this.actualLevel = 1;
     this.lenght = 0;
-    this.startGame = 0;
     this.showHistory = 0;
     this.gameHistory = Array(0).fill(null);
   }
 
   ngOnInit(): void {
-    this.httpClient.get("http://localhost:3000/allLevel", { responseType: 'text' }).subscribe(res => {this.levelData = JSON.parse(res);});
-    this.httpClient.get("http://localhost:3000/allGames", { responseType: 'text' }).subscribe(res => {this.gameHistory = JSON.parse(res);});
 
   }
+  startGame(){
+    /*
+    const data =  [{
+      'name' : this.name,
+    }];
 
-  startGameOnMenu(){
-    this.startGame = 1;
+    this.httpClient.post("http://localhost:3000/addGame", data).subscribe(  (err) => {
+        if(err) console.log(err);
+    });*/
   }
 
-  returnToMenu(event :any){
-    this.startGame = event;
-
-  }
 
   showHistoryButton(){
     if(this.showHistory == 0){
+      this.httpClient.get("http://localhost:3000/allGames", { responseType: 'text' }).subscribe(res => {this.gameHistory = JSON.parse(res);});
+
       this.sortId();
       this.showHistory = 1;
     }else {
       this.showHistory = 0;
     }
-  }
-
-  nextLevelStyle(event :any){
-    this.actualLevel = event;
   }
 
   sortId(){
