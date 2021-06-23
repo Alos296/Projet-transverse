@@ -20,45 +20,14 @@ ctx.canvas.width  = window.innerWidth- 2;
 ctx.canvas.height = window.innerHeight - 2;
 
 
-/*
-function drawPlayers() {
-  players.forEach(function({playerNumber,x, y, size, c}) {
-    ctx.beginPath();
-    ctx.rect(x*1000/map[level].Width+(1000/map[level].Width)/2-size/2, y*800/map[level].Lenght+(800/map[level].Lenght)/2-size/2, size, size);
-    ctx.fillStyle = c;
-    ctx.font = "30px Arial";
-    ctx.fillText("J" + playerNumber, x*1000/map[level].Width+(1000/map[level].Width)/2-3*size/4, y*800/map[level].Lenght+(800/map[level].Lenght)/2-size-3);
-    ctx.fill();
-  });
-}
-*/
 function drawMap() {
-
-
-
-
-
-
-
-  /*
-  //To the draw the Grid
-
-
-  ctx.lineWidth = 0;
-  ctx.strokeStyle = "rgb(0,0,0)";
-  for (var x = 0; x < 1000; x += 1000/map[level].Width) {
-      for (var y = 0; y < 800; y += 800/map[level].Lenght) {
-         ctx.strokeRect(x, y, 1000/map[level].Width, 800/map[level].Lenght);
-      }
-
-  }
-  */
   for(let i = 0; i < map[level].Container.length;i++){
 
     if(map[level].Container[i] == '1'){
+
       ctx.beginPath();
       ctx.fillStyle = "#FF0000"; //red
-      ctx.fillRect((i % map[level].Width)*widthGlobal/map[level].Width + (widthGlobal/map[level].Width)/2 - widthSize/2, Math.floor(i / map[level].Width) * lengthGlobal/map[level].Lenght + (lengthGlobal/map[level].Lenght)/2 - lengthSize/2,widthSize,lengthSize);
+      ctx.fillRect((i % map[level].Width)*widthGlobal/map[level].Width + (widthGlobal/map[level].Width)/2 - widthSize/2, Math.floor(i / map[level].Width) * lengthGlobal/map[level].Lenght + (lengthGlobal/map[level].Lenght)/2 - lengthSize/2,widthSize*1.5,lengthSize*1.5);
       ctx.font = '35px Verdana';
       ctx.textAlign = 'center';
       ctx.fillText("J1", (i % map[level].Width) * widthGlobal/map[level].Width+(widthGlobal/map[level].Width)/2, Math.floor(i / map[level].Width) *lengthGlobal/map[level].Lenght+(lengthGlobal/map[level].Lenght)/2-lengthSize-3);
@@ -68,7 +37,7 @@ function drawMap() {
     if(map[level].Container[i] == '2'){
       ctx.beginPath();
       ctx.fillStyle = "#0000FF"; //blue
-      ctx.fillRect((i % map[level].Width)*widthGlobal/map[level].Width + (widthGlobal/map[level].Width)/2 - widthSize/2, Math.floor(i / map[level].Width) * lengthGlobal/map[level].Lenght + (lengthGlobal/map[level].Lenght)/2 - lengthSize/2,widthSize,lengthSize);
+      ctx.fillRect((i % map[level].Width)*widthGlobal/map[level].Width + (widthGlobal/map[level].Width)/2 - widthSize/2, Math.floor(i / map[level].Width) * lengthGlobal/map[level].Lenght + (lengthGlobal/map[level].Lenght)/2 - lengthSize/2,widthSize*1.5,lengthSize*1.5);
       ctx.font = '35px Verdana';
       ctx.textAlign = 'center';
       ctx.fillText("J2", (i % map[level].Width) * widthGlobal/map[level].Width+(widthGlobal/map[level].Width)/2, Math.floor(i / map[level].Width) *lengthGlobal/map[level].Lenght+(lengthGlobal/map[level].Lenght)/2-lengthSize-3);
@@ -173,12 +142,13 @@ function drawGG(){
   ctx.textAlign = 'center';
   ctx.fillText("Bravo !",widthGlobal/2,lengthGlobal*2/5);
   ctx.fill();
-  
+
   ctx.beginPath();
   ctx.font = "50px Arial";
   ctx.fillText("Vous gagné avec " + totalScore +" Points !",widthGlobal/2,lengthGlobal*4/5 );
   ctx.fill();
 }
+
 function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   if(level < 10){
@@ -195,23 +165,6 @@ function update() {
 setTimeout(() => { requestAnimationFrame(update); }, 1000);
 
 const keyboard = {};
-/*
-document.addEventListener('keydown', function(event) {
-  players.forEach(function({playerNumber,x, y, size, c}) {
-    if(event.keyCode == 87 || event.keyCode == 38) {
-      socket.emit('move up',playerNumber);
-    }
-    if(event.keyCode == 83 || event.keyCode == 40) {
-      socket.emit('move down',playerNumber);
-    }
-    if(event.keyCode == 65 || event.keyCode == 37) {
-      socket.emit('move left',playerNumber);
-    }
-    if(event.keyCode == 68 || event.keyCode == 39) {
-      socket.emit('move right',playerNumber);
-    }
-  })
-});*/
 
 window.onkeydown = function(e) {
   if(level < 10){
@@ -220,12 +173,10 @@ window.onkeydown = function(e) {
       if (keyboard['ArrowUp']) {socket.emit('move up',playerNumber)};
       if (keyboard['ArrowRight']) {socket.emit('move right',playerNumber)};
       if (keyboard['ArrowDown']) {socket.emit('move down',playerNumber)};
+      if (keyboard['Escape']) {socket.emit('quit game')}
     keyboard[e.key] = false;
   }
 };
-
-
-
 
 
 

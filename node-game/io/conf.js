@@ -38,19 +38,12 @@ module.exports = function(server) {
 
       function win() {
         setTimeout(function(){io.emit('win');level += 1;}, 500);
-        if(level == 10){
-          con.query('SELECT * FROM Game',(err,results) => {
-            if(err) throw err;
-              con.query("UPDATE `Game` SET `Score`=?,`LastLvl`=?  WHERE ID = '?'", [totalScore,level+1,Object.size(results)],
-              function (error, results, fields) {
-                if (error) throw error;
-                res.send(results);
-                });
-              });
 
+        if(level == 9){
+          mainServer.quitGame(totalScore,level+1);
           }
-
       }
+
 
       function update() {
 
@@ -216,9 +209,12 @@ module.exports = function(server) {
           mainServer.level[level].Container[actualPos] = '0'
           mainServer.level[level].Container[actualPos + move*mainServer.level[level].Width] = player.toString()
         })
+
+        socket.on('quit game',    function() {
+          mainServer.quitGame(totalScore,level);
+          level = 10
+        })
       });
-
-
 
       // delete disconnected player
       socket.on('disconnect', function() {

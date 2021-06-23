@@ -61,24 +61,16 @@ app.get('/allGames', function (req, res) {
     });
 })
 
-app.post('/addGame', function (req, res) {
-  var postData = "Test5";
 
-  console.log("Ceci est un test");
-  console.log(res.body);
-  console.log(res.body[0].name);
+exports.quitGame = function(score,level) {
 
 
-  con.query("INSERT INTO `Game` (`ID`, `Pseudo1`, `Pseudo2`, `Time`, `Score`, `LastLvl`) VALUES (NULL, ?, '*', '00:00:00', '0', '0')",[postData],
+  con.query("INSERT INTO `Game` (`ID`, `Pseudo1`, `Pseudo2`, `Time`, `Score`, `LastLvl`) VALUES (null, ?, ?, '00:00:00', ?, ?)",['Jhon','Jack',score,level],
   function (error, results, fields) {
   if (error) throw error;
-    res.send(results);
+    console.log("Game Saved")
   });
-});
-
-
-
-
+}
 
 
 var server = http.createServer(app);
@@ -102,6 +94,7 @@ function normalizePort(val) {
   if (port >= 0) {
     return port;
   }
+
 
   return false;
 }

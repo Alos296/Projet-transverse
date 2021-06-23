@@ -20,7 +20,7 @@ export class MapComponent implements OnInit {
 
 
   constructor(private httpClient: HttpClient) {
-    this.name = "";
+    this.name = " ";
     this.actualLevel = 1;
     this.lenght = 0;
     this.showHistory = 0;
@@ -31,14 +31,7 @@ export class MapComponent implements OnInit {
 
   }
   startGame(){
-    /*
-    const data =  [{
-      'name' : this.name,
-    }];
 
-    this.httpClient.post("http://localhost:3000/addGame", data).subscribe(  (err) => {
-        if(err) console.log(err);
-    });*/
   }
 
 
