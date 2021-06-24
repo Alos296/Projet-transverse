@@ -9,6 +9,7 @@ module.exports = function(server) {
 
   var players = {};
   var totalScore = 0;
+  var time = 0;
 
 
   io.on('connection', function(socket) {
@@ -16,6 +17,7 @@ module.exports = function(server) {
     if(Object.size(players) < 2){
       level = 0;
       if(Object.size(players) == 0){
+        time = 0;
         io.to(socket.id).emit('players number', 1);
         mainServer.level[level].Container[mainServer.level[level].Player1 % mainServer.level[level].Width + (Math.floor(mainServer.level[level].Player1 / mainServer.level[level].Width))*mainServer.level[level].Width] = '1'
         players[socket.id] = {
@@ -40,16 +42,17 @@ module.exports = function(server) {
         setTimeout(function(){io.emit('win');level += 1;}, 500);
 
         if(level == 9){
-          mainServer.quitGame(totalScore,level+1);
+          mainServer.quitGame(totalScore,level+1,time);
           }
       }
 
 
       function update() {
-
+        time += (1000/60)/3;
         io.volatile.emit('players list', Object.values(players));
         io.emit('level data', mainServer.level);
         io.emit('level actual', level);
+        io.emit('time actual', time);
       }
 
       io.on('connection', function(socket) {
@@ -211,7 +214,7 @@ module.exports = function(server) {
         })
 
         socket.on('quit game',    function() {
-          mainServer.quitGame(totalScore,level);
+          mainServer.quitGame(totalScore,level,time);
           level = 10
         })
       });

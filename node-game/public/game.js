@@ -6,6 +6,7 @@ let players = [];
 let map = [];
 let level = 0;
 let playerNumber = 0;
+let time = 0;
 
 let hudFormat = 60
 let lengthGlobal = window.innerHeight;
@@ -30,7 +31,7 @@ function drawMap() {
       ctx.fillRect((i % map[level].Width)*widthGlobal/map[level].Width + (widthGlobal/map[level].Width)/2 - widthSize/2, Math.floor(i / map[level].Width) * lengthGlobal/map[level].Lenght + (lengthGlobal/map[level].Lenght)/2 - lengthSize/2,widthSize*1.5,lengthSize*1.5);
       ctx.font = '35px Verdana';
       ctx.textAlign = 'center';
-      ctx.fillText("J1", (i % map[level].Width) * widthGlobal/map[level].Width+(widthGlobal/map[level].Width)/2, Math.floor(i / map[level].Width) *lengthGlobal/map[level].Lenght+(lengthGlobal/map[level].Lenght)/2-lengthSize-3);
+      ctx.fillText("J1", (i % map[level].Width) * widthGlobal/map[level].Width+(widthGlobal/map[level].Width)/2 + 10, Math.floor(i / map[level].Width) *lengthGlobal/map[level].Lenght+(lengthGlobal/map[level].Lenght)/2-lengthSize-3);
       ctx.fill();
 
     }
@@ -40,7 +41,7 @@ function drawMap() {
       ctx.fillRect((i % map[level].Width)*widthGlobal/map[level].Width + (widthGlobal/map[level].Width)/2 - widthSize/2, Math.floor(i / map[level].Width) * lengthGlobal/map[level].Lenght + (lengthGlobal/map[level].Lenght)/2 - lengthSize/2,widthSize*1.5,lengthSize*1.5);
       ctx.font = '35px Verdana';
       ctx.textAlign = 'center';
-      ctx.fillText("J2", (i % map[level].Width) * widthGlobal/map[level].Width+(widthGlobal/map[level].Width)/2, Math.floor(i / map[level].Width) *lengthGlobal/map[level].Lenght+(lengthGlobal/map[level].Lenght)/2-lengthSize-3);
+      ctx.fillText("J2", (i % map[level].Width) * widthGlobal/map[level].Width+(widthGlobal/map[level].Width)/2 + 10, Math.floor(i / map[level].Width) *lengthGlobal/map[level].Lenght+(lengthGlobal/map[level].Lenght)/2-lengthSize-3);
       ctx.fill();
 
 
@@ -126,7 +127,8 @@ function drawHUD() {
     ctx.textAlign = 'center';
     ctx.fillText("Score J" + playerNumber +" : " + score ,(widthGlobal * playerNumber )/4,lengthGlobal/(hudFormat/3));
     ctx.fillText("Score total : " + totalScore,(widthGlobal * 3 )/4,lengthGlobal/(hudFormat/3));
-    ctx.fillText("Niveau actuel : " + (level + 1),(widthGlobal * 2 )/4,lengthGlobal - (hudFormat/3));
+    ctx.fillText("Niveau actuel : " + (level + 1),(widthGlobal * 1 )/4,lengthGlobal - (hudFormat/3));
+    ctx.fillText("Temps : " + Math.floor(time / 1000) + "s",(widthGlobal * 3 )/4,lengthGlobal - (hudFormat/3));
     ctx.fill();
   });
 }
@@ -182,6 +184,10 @@ window.onkeydown = function(e) {
 
 socket.on('win', function() {
   level += 1
+});
+
+socket.on('time actual', function(actualTime) {
+  time = actualTime;
 });
 
 socket.on('players number', function(number) {

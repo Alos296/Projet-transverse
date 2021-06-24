@@ -62,10 +62,9 @@ app.get('/allGames', function (req, res) {
 })
 
 
-exports.quitGame = function(score,level) {
+exports.quitGame = function(score,level,time) {
 
-
-  con.query("INSERT INTO `Game` (`ID`, `Pseudo1`, `Pseudo2`, `Time`, `Score`, `LastLvl`) VALUES (null, ?, ?, '00:00:00', ?, ?)",['Jhon','Jack',score,level],
+  con.query("INSERT INTO `Game` (`ID`, `Pseudo1`, `Pseudo2`, `Time`, `Score`, `LastLvl`) VALUES (null, ?, ?,?, ?, ?)",['Jhon','Jack',Math.floor(time/1000),score,level],
   function (error, results, fields) {
   if (error) throw error;
     console.log("Game Saved")
